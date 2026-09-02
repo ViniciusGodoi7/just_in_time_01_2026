@@ -1,92 +1,46 @@
 # 📦 Sistema Just in Time — Gestão de Produção MDF
 
-Sistema Web desenvolvido para auxiliar no **controle de produção e estoque de produtos em MDF**, permitindo cadastrar produtos, registrar entradas e saídas e acompanhar a quantidade disponível em estoque.
+## 📌 Sobre o Projeto
 
-O projeto foi desenvolvido como atividade acadêmica, utilizando **Node.js, Express, MySQL, HTML, CSS e JavaScript**.
+O **Sistema Just in Time** foi desenvolvido com o objetivo de auxiliar no controle da produção e do estoque de produtos fabricados em MDF.
 
----
+O sistema permite que o usuário acompanhe os produtos cadastrados, controle a quantidade disponível em estoque, registre produções e pedidos, além de consultar o histórico das movimentações realizadas.
 
-## 📋 Sobre o projeto
-
-O sistema foi criado com base no conceito de **Just in Time**, buscando facilitar o controle da produção de acordo com a necessidade do estoque.
-
-Através da aplicação, o usuário consegue cadastrar os produtos fabricados, definir uma quantidade mínima de estoque e registrar as movimentações realizadas.
-
-Quando um produto é fabricado, sua quantidade é adicionada ao estoque. Já quando um pedido é registrado, a quantidade correspondente é retirada.
+O projeto foi desenvolvido como atividade acadêmica, utilizando tecnologias de desenvolvimento **Web Full-Stack**.
 
 ---
 
-## 🚀 Funcionalidades
+## ⚙️ Funcionalidades
 
-* 🔐 Sistema de login;
-* 📦 Cadastro de produtos;
-* 🔎 Pesquisa de produtos;
-* ✏️ Edição de produtos;
-* 🗑️ Exclusão de produtos;
-* 📊 Controle de quantidade em estoque;
-* ⚠️ Controle de estoque mínimo;
-* 🏭 Registro de produtos fabricados;
-* 🛒 Registro de pedidos;
-* 📋 Histórico de movimentações;
-* 👤 Identificação do usuário responsável pela movimentação;
-* 🔤 Ordenação dos produtos utilizando QuickSort.
-
----
-
-## 🖥️ Telas do sistema
-
-### 🔐 Tela de Login
-
-Página utilizada para realizar o acesso ao sistema.
-
-![Tela de Login](./img/login.png)
+* 🔐 Sistema de login de usuários
+* 👤 Identificação do usuário responsável pelas movimentações
+* 📦 Cadastro de produtos
+* ✏️ Edição de produtos
+* 🗑️ Exclusão de produtos
+* 🔎 Pesquisa de produtos
+* 📊 Controle de estoque
+* ⚠️ Definição de estoque mínimo
+* 🏭 Registro de produtos fabricados
+* 📤 Registro de pedidos e saídas do estoque
+* 📋 Histórico de movimentações
+* 📅 Registro da data das movimentações
+* 🔄 Atualização automática da quantidade em estoque
+* 🔢 Organização dos produtos utilizando o algoritmo QuickSort
 
 ---
 
-### 🏠 Página Inicial
+## 💻 Tecnologias Utilizadas
 
-Página principal apresentada após o usuário entrar no sistema.
-
-![Página Inicial](./img/home.png)
-
----
-
-### 📦 Cadastro de Produtos
-
-Tela responsável pelo cadastro e gerenciamento dos produtos.
-
-![Produtos](./img/produtos.png)
-
----
-
-### 🏭 Controle de Produção
-
-Área utilizada para registrar produtos fabricados e pedidos.
-
-![Produção](./img/producao.png)
-
----
-
-> **Observação:** coloque as imagens do projeto dentro de uma pasta chamada `img` e mantenha os nomes dos arquivos iguais aos utilizados acima.
-> Caso suas imagens tenham outros nomes, basta alterar os caminhos no README.
-
----
-
-## 🛠️ Tecnologias utilizadas
-
-### Frontend
+### Front-end
 
 * HTML5
 * CSS3
 * JavaScript
 
-### Backend
+### Back-end
 
 * Node.js
 * Express.js
-
-### Banco de dados
-
 * MySQL
 * mysql2
 
@@ -100,82 +54,106 @@ Tela responsável pelo cadastro e gerenciamento dos produtos.
 
 ---
 
-## 📁 Estrutura do projeto
+## 📁 Estrutura do Projeto
 
 ```text
-sistema-jit-mdf/
+just_in_time_01_2026/
 │
 ├── config/
 │   └── database.js
 │
+├── controllers/
+│
 ├── public/
-│   ├── index.html
+│   ├── css/
+│   ├── js/
 │   ├── login.html
-│   ├── produtos.html
-│   ├── producao.html
-│   └── style.css
+│   └── ...
 │
 ├── src/
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── produtoController.js
-│   │   └── producaoController.js
-│   │
-│   └── routes.js
-│
-├── img/
-│   ├── login.png
-│   ├── home.png
-│   ├── produtos.png
-│   └── producao.png
+│   ├── routes/
+│   └── ...
 │
 ├── database.sql
 ├── documentacao.md
 ├── package.json
 ├── package-lock.json
-├── server.js
-└── README.md
+└── server.js
 ```
 
 ---
 
-## 🗄️ Banco de dados
+## 🗄️ Banco de Dados
 
-O projeto utiliza o **MySQL** para armazenar os dados.
+O sistema utiliza o **MySQL** como banco de dados.
 
-O banco utilizado é:
+O banco utilizado no projeto possui o nome:
 
 ```text
 preparacao_db
 ```
 
-As principais tabelas são:
+### Principais tabelas
+
+#### Usuários
+
+Armazena os usuários que possuem acesso ao sistema.
 
 ```text
 usuarios
+```
+
+Campos principais:
+
+* `id`
+* `nome`
+* `email`
+* `senha`
+
+#### Produtos
+
+Armazena as informações dos produtos fabricados.
+
+```text
 produtos
+```
+
+Campos principais:
+
+* `id`
+* `nome`
+* `descricao`
+* `custo`
+* `qtd_estoque`
+* `qtd_minima`
+
+#### Movimentações de Estoque
+
+Registra as entradas e saídas de produtos.
+
+```text
 movimentacoes_estoque
 ```
 
-### Relacionamento
+Campos principais:
+
+* `id`
+* `produto_id`
+* `usuario_id`
+* `tipo`
+* `quantidade`
+* `data_movimentacao`
+
+Os tipos de movimentação utilizados são:
 
 ```text
-USUARIOS
-    │
-    │
-    ▼
-MOVIMENTACOES_ESTOQUE
-    ▲
-    │
-    │
-PRODUTOS
+FABRICADO
+PEDIDO
 ```
-
-Um usuário pode realizar várias movimentações e um produto pode possuir várias movimentações de estoque.
 
 ---
 
-## ⚙️ Como executar o projeto
+## 🔧 Como Executar o Projeto
 
 ### 1. Clonar o repositório
 
@@ -183,13 +161,11 @@ Um usuário pode realizar várias movimentações e um produto pode possuir vár
 git clone URL_DO_SEU_REPOSITORIO
 ```
 
-Depois entre na pasta:
+Entre na pasta do projeto:
 
 ```bash
 cd nome-do-projeto
 ```
-
----
 
 ### 2. Instalar as dependências
 
@@ -199,8 +175,6 @@ Execute:
 npm install
 ```
 
----
-
 ### 3. Configurar o MySQL
 
 Abra o **XAMPP** e inicie o:
@@ -209,36 +183,47 @@ Abra o **XAMPP** e inicie o:
 MySQL
 ```
 
-Depois abra o **phpMyAdmin** e execute o arquivo:
+Depois abra o **phpMyAdmin**.
+
+Importe o arquivo:
 
 ```text
 database.sql
 ```
 
-Esse arquivo cria o banco de dados e suas respectivas tabelas.
-
----
+Esse arquivo será responsável por criar o banco de dados e suas tabelas.
 
 ### 4. Conferir a conexão
 
-Verifique o arquivo:
+O arquivo responsável pela conexão com o banco é:
 
 ```text
 config/database.js
 ```
 
-A configuração utilizada no projeto é semelhante a:
+A configuração utilizada no projeto é:
 
 ```javascript
-host: "127.0.0.1",
-user: "root",
-password: "",
-database: "preparacao_db"
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: '127.0.0.1',
+    user: 'root',
+    password: '',
+    database: 'preparacao_db',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+module.exports = pool;
 ```
 
-Caso o seu MySQL tenha uma senha diferente, altere o campo `password`.
+Caso o MySQL esteja configurado com outra senha, altere o campo:
 
----
+```javascript
+password: ''
+```
 
 ### 5. Iniciar o servidor
 
@@ -248,7 +233,13 @@ Execute:
 npm start
 ```
 
-Depois abra o navegador e acesse:
+Se tudo estiver funcionando corretamente, aparecerá uma mensagem semelhante a:
+
+```text
+Servidor rodando com sucesso em http://localhost:3000
+```
+
+Depois acesse no navegador:
 
 ```text
 http://localhost:3000
@@ -256,9 +247,9 @@ http://localhost:3000
 
 ---
 
-## 🔑 Acesso para teste
+## 🔑 Usuário para Teste
 
-O banco possui usuários cadastrados para facilitar os testes.
+O banco de dados já possui alguns usuários cadastrados.
 
 Exemplo:
 
@@ -267,125 +258,112 @@ E-mail: carlos@mdf.com
 Senha: 123456
 ```
 
-Também existem outros usuários cadastrados no `database.sql`.
+Também existem outros usuários cadastrados no arquivo `database.sql`.
 
 ---
 
-## 🔄 Funcionamento do estoque
+## 📦 Controle de Estoque
 
-O estoque é alterado de acordo com a movimentação registrada.
+O sistema trabalha com dois tipos principais de movimentação.
 
-### Produto fabricado
+### 🏭 Produto Fabricado
 
-Quando um produto é fabricado:
-
-```text
-Estoque atual + quantidade fabricada
-```
+Quando um produto é fabricado, sua quantidade é adicionada ao estoque.
 
 Exemplo:
 
 ```text
-Estoque: 10
-Produção: 5
-
-Resultado: 15 unidades
+Produto: Caixa Organizadora MDF
+Quantidade fabricada: 10
 ```
 
-### Pedido
+O estoque será atualizado adicionando as 10 unidades.
 
-Quando um pedido é registrado:
+### 📤 Pedido
 
-```text
-Estoque atual - quantidade solicitada
-```
+Quando um pedido é registrado, a quantidade correspondente é retirada do estoque.
 
 Exemplo:
 
 ```text
-Estoque: 15
-Pedido: 4
-
-Resultado: 11 unidades
+Produto: Caixa Organizadora MDF
+Quantidade solicitada: 3
 ```
 
-O sistema também verifica se existe estoque suficiente antes de realizar uma saída.
+Nesse caso, o sistema diminui 3 unidades do estoque.
 
 ---
 
-## ⚠️ Estoque mínimo
+## ⚠️ Estoque Mínimo
 
-Cada produto possui uma quantidade mínima configurada.
+Cada produto possui uma quantidade mínima definida no cadastro.
 
-Quando o estoque fica abaixo desse valor, o sistema consegue identificar que o produto necessita de atenção.
+Essa informação permite identificar quando o estoque está abaixo do nível recomendado.
 
 Exemplo:
 
 ```text
-Estoque atual: 3
+Estoque atual: 4
 Estoque mínimo: 10
 ```
 
-Nesse caso, o produto está abaixo do estoque mínimo.
+Nesse caso, o produto precisa ser produzido novamente para que o estoque seja reposto.
 
 ---
 
-## 🔤 Ordenação com QuickSort
+## 🔢 Algoritmo QuickSort
 
-Os produtos da área de produção são organizados alfabeticamente utilizando o algoritmo **QuickSort**.
+O projeto também utiliza o algoritmo de ordenação **QuickSort** para organizar os produtos.
 
-O algoritmo utiliza um elemento como referência (`pivot`) e divide os demais elementos em grupos menores e maiores, realizando o processo de forma recursiva até obter a lista ordenada.
+O algoritmo permite ordenar os registros de acordo com determinado critério, facilitando a visualização e localização dos produtos no sistema.
 
 ---
 
-## 🔗 Principais rotas da API
+## 🌐 Rotas da API
 
-### Login
+O back-end utiliza o **Express.js** para disponibilizar as rotas da aplicação.
 
-```http
-POST /api/login
+Algumas das funcionalidades disponibilizadas pela API são:
+
+```text
+/api
 ```
 
-### Produtos
+Rotas relacionadas a:
 
-```http
-GET /api/produtos
-POST /api/produtos
-PUT /api/produtos/:id
-DELETE /api/produtos/:id
-```
+* Usuários
+* Produtos
+* Produção
+* Pedidos
+* Movimentações de estoque
 
-### Produção
-
-```http
-GET /api/producao/produtos
-POST /api/producao/movimentacao
-```
+As requisições são processadas pelo servidor Node.js e os dados são armazenados no MySQL.
 
 ---
 
 ## 📚 Documentação
 
-Para consultar informações mais detalhadas sobre o funcionamento do sistema, banco de dados, API e estrutura dos arquivos, consulte:
+Para consultar informações mais detalhadas sobre o funcionamento e desenvolvimento do sistema, acesse:
 
 [📖 Documentação completa](./documentacao.md)
 
 ---
 
-## 🎯 Objetivo acadêmico
+## 🎯 Objetivo Acadêmico
 
-Este projeto foi desenvolvido com o objetivo de colocar em prática conhecimentos relacionados a:
+O projeto foi desenvolvido com finalidade acadêmica, buscando colocar em prática conceitos de:
 
-* Desenvolvimento Full Stack;
-* Criação de APIs;
-* Node.js e Express;
-* Banco de dados MySQL;
-* Operações CRUD;
-* Relacionamentos entre tabelas;
-* Controle de estoque;
-* Autenticação de usuários;
-* Algoritmos de ordenação;
-* Desenvolvimento de interfaces web.
+* Desenvolvimento Web
+* JavaScript
+* Node.js
+* Express
+* Banco de Dados
+* SQL
+* APIs
+* CRUD
+* Controle de estoque
+* Algoritmos de ordenação
+* Git e GitHub
 
 ---
 
@@ -393,7 +371,7 @@ Este projeto foi desenvolvido com o objetivo de colocar em prática conhecimento
 
 **Vinicius Godoi**
 
-Projeto desenvolvido para fins acadêmicos — SENAI.
+Projeto desenvolvido para fins educacionais no **SENAI**.
 
 ---
 
