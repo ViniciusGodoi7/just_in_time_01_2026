@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Principal - MDF JIT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Sistema JIT MDF</h2>
+        <div>
+            <span id="userInfo"></span>
+            <button class="btn btn-danger" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <h1>Bem-vindo ao Controle de Produção</h1>
+        <p>Selecione uma opção abaixo para navegar:</p>
+        <div>
+            <a href="produtos.html" class="btn btn-primary btn-large">Cadastro e Consulta de Produtos</a>
+            <a href="producao.html" class="btn btn-success btn-large">Gestão de Produção (Just in Time)</a>
+        </div>
+    </div>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (!usuario) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('userInfo').textContent = `Usuário: ${usuario.nome} | `;
+        }
+
+        function logout() {
+            localStorage.removeItem('usuario');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

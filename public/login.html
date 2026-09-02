@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Just in Time MDF</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="center-container">
+    <div class="card login-card">
+        <h2>Entrar no Sistema</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+        </form>
+        <div id="msg" class="alert-error"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const msg = document.getElementById('msg');
+
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, senha })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                localStorage.setItem('usuario', JSON.stringify(data.user));
+                window.location.href = 'index.html';
+            } else {
+                msg.textContent = data.message;
+            }
+        });
+    </script>
+</body>
+</html>

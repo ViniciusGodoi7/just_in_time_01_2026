@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Produção JIT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-container">
+    <div class="top-bar">
+        <h2>Gestão de Produção (Just in Time)</h2>
+        <a href="index.html" class="btn btn-secondary">Voltar ao Menu Principal</a>
+    </div>
+
+    <div class="form-card">
+        <h3>Registrar Movimentação de Estoque</h3>
+        <form id="movForm">
+            <div class="form-group">
+                <label for="produto_id">Selecione o Produto (Ordenados Alfabeticamente):</label>
+                <select id="produto_id" required></select>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo de Movimentação:</label>
+                <select id="tipo" required>
+                    <option value="FABRICADO">Fabricado (Entrada)</option>
+                    <option value="PEDIDO">Pedido (Saída)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="data_movimentacao">Data da Movimentação:</label>
+                <input type="datetime-local" id="data_movimentacao" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-full">Confirmar Movimentação</button>
+        </form>
+
+        <div id="alertaMinimo" class="alert-box hidden">
+            <strong>ATENÇÃO!</strong> O estoque deste produto ficou abaixo do limite mínimo configurado!
+        </div>
+    </div>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (!usuario) window.location.href = 'login.html';
+
+        document.getElementById('data_movimentacao').value = new Date().toISOString().slice(0, 16);
+
+        async function carregarProdutosOrdenados() {
+            const res = await fetch('/api/producao/produtos');
+            const produtos = await res.json();
+            const select = document.getElementById('produto_id');
+            select.innerHTML = '';
+            produtos.forEach(p => {
+                select.innerHTML += `<option value="${p.id}">${p.nome} (Estoque: ${p.qtd_estoque} | Mín: ${p.qtd_minima})</option>`;
+            });
+        }
+
+        document.getElementById('movForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const alerta = document.getElementById('alertaMinimo');
+            alerta.classList.add('hidden');
+
+            const payload = {
+                produto_id: document.getElementById('produto_id').value,
+                usuario_id: usuario.id,
+                tipo: document.getElementById('tipo').value,
+                quantidade: document.getElementById('quantidade').value,
+                data_movimentacao: document.getElementById('data_movimentacao').value
+            };
+
+            const res = await fetch('/api/producao/movimentacao', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                if (data.alertaEstoque) {
+                    alerta.classList.remove('hidden');
+                }
+                carregarProdutosOrdenados();
+            } else {
+                alert('Erro: ' + data.message);
+            }
+        });
+
+        carregarProdutosOrdenados();
+    </script>
+</body>
+</html>
